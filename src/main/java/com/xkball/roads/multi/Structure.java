@@ -13,7 +13,7 @@ public class Structure {
     private final Map<Character, BlockInfo> structureInfos;
 
     private Structure(List<String> structure, Map<Character, BlockInfo> structureInfos) {
-        this.structure = structure;
+        this.structure = List.copyOf(structure);
         this.structureInfos = Map.copyOf(structureInfos);
     }
 
@@ -66,8 +66,8 @@ public class Structure {
 
         public static final int ALL = INPUT | OUTPUT | ITEM | FLUID | ENERGY;
 
-        Block block;
-        int flags;
+        private final Block block;
+        private final int flags;
 
         public Block getBlock() {
             return block;
