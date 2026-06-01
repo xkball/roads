@@ -21,14 +21,12 @@ public class ModTabs {
             .title(Component.translatable("itemGroup.roads")) //The language key for the title of your CreativeModeTab
             .withTabsBefore(CreativeModeTabs.COMBAT)
             .icon(() -> ModItems.EXAMPLE_ITEM.get().getDefaultInstance())
-            .displayItems((parameters, output) -> {
-                output.accept(ModItems.EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
-            }).build());
+            .build());
 
     @SubscribeEvent
     public static void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == EXAMPLE_TAB.getKey()) {
-            event.accept(ModItems.EXAMPLE_BLOCK_ITEM);
+            ModItems.ITEMS.getEntries().forEach(item -> event.accept(item.get()));
         }
     }
 }

@@ -9,15 +9,15 @@ import java.util.*;
  * 这个结构类会在主方块的te里面存着，以便生成并操纵子方块的te数据
  */
 public class Structure {
-    private final List<String> structure;
+    private final List<String[]> structure;
     private final Map<Character, BlockInfo> structureInfos;
 
-    private Structure(List<String> structure, Map<Character, BlockInfo> structureInfos) {
+    private Structure(List<String[]> structure, Map<Character, BlockInfo> structureInfos) {
         this.structure = List.copyOf(structure);
         this.structureInfos = Map.copyOf(structureInfos);
     }
 
-    public List<String> getStructure() {
+    public List<String[]> getStructure() {
         return structure;
     }
 
@@ -26,13 +26,11 @@ public class Structure {
     }
 
     public static class StructureBuilder {
-        private final List<String> structure = new ArrayList<>();
+        private final List<String[]> structure = new ArrayList<>();
         private final Map<Character, BlockInfo> structureBlockInfos = new HashMap<>();
 
         public StructureBuilder setStructureInfo(String[]... structureInfo) {
-            for (String[] str : structureInfo) {
-                structure.add(Arrays.toString(str));
-            }
+            structure.addAll(Arrays.asList(structureInfo));
             return this;
         }
 
@@ -56,6 +54,8 @@ public class Structure {
             this.block = block;
             this.flags = flags;
         }
+
+        //TODO 拆成in/out的enum和直接对cap的引用
 
         public static final int NULL = 0b00000;
         public static final int INPUT = 0b00001;
