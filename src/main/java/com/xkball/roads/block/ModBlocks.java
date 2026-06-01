@@ -12,4 +12,5 @@ public class ModBlocks {
 
     // Creates a new Block with the id "roads:example_block", combining the namespace and path
     public static final DeferredBlock<Block> EXAMPLE_BLOCK = BLOCKS.registerSimpleBlock("example_block", p -> p.mapColor(MapColor.STONE));
+    public static final DeferredBlock<Block> TEST_BLOCK = BLOCKS.registerBlock("test_block", p -> new TestBlock(p.mapColor(MapColor.STONE)));
 }

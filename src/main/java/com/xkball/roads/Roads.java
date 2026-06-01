@@ -1,6 +1,7 @@
 package com.xkball.roads;
 
 import com.xkball.roads.block.ModBlocks;
+import com.xkball.roads.blockentity.ModBlockEntities;
 import com.xkball.roads.item.ModItems;
 import org.slf4j.Logger;
 
@@ -32,12 +33,10 @@ public class Roads {
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
 
-        // Register the Deferred Register to the mod event bus so blocks get registered
         ModBlocks.BLOCKS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so items get registered
         ModItems.ITEMS.register(modEventBus);
-        // Register the Deferred Register to the mod event bus so tabs get registered
         ModTabs.CREATIVE_MODE_TABS.register(modEventBus);
+        ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (Roads) to respond directly to events.

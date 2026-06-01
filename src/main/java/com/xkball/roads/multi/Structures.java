@@ -5,6 +5,8 @@ import net.minecraft.world.level.block.Blocks;
 
 import static com.xkball.roads.multi.Structure.BlockInfo.*;
 
+
+//TODO 也许可以改成数据驱动？ by:skyinr
 public class Structures {
     public static final Structure TEST_STRUCTURE = new Structure.StructureBuilder()
             .setStructureInfo(new String[]{
