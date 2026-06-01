@@ -47,7 +47,7 @@ public class RoadsStructureItem extends BlockItem {
 
     private boolean canPlaceStructure() {
         // 检查结构能不能放
-
+        // TODO:检查逻辑 by:skyinr
         return true;
     }
 }
