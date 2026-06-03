@@ -15,6 +15,7 @@ public class ModLanguageProvider extends LanguageProvider {
         add(ModItems.EXAMPLE_ITEM.get(),"占位物品");
         add(ModItems.EXAMPLE_BLOCK_ITEM.get(),"占位方块");
 
+        add(ModItems.TEST_BLOCK_ITEM.get(),"结构测试方块");
 //        add(ModBlocks.EXAMPLE_BLOCK.get(),"占位方块");
     }
 }

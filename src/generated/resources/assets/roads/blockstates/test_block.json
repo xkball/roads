@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "roads:block/test_block"
+    }
+  }
+}

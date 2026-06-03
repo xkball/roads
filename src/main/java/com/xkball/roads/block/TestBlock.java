@@ -20,7 +20,7 @@ public class TestBlock extends RoadBaseStructureEntityBlock{
     }
 
     @Override
-    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(Level level, BlockState blockState, BlockEntityType<T> type) {
+    public @Nullable <T extends BlockEntity> BlockEntityTicker<T> getTicker(@NonNull Level level, @NonNull BlockState blockState, @NonNull BlockEntityType<T> type) {
         return createTickerHelper(type, ModBlockEntities.TEST_BLOCK_ENTITY.get(), TestBlockEntity::tick);
     }
 

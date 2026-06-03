@@ -20,6 +20,7 @@ public class ModItemModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ModItems.EXAMPLE_ITEM.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 
         blockModels.createTrivialCube(ModBlocks.EXAMPLE_BLOCK.get());
+        blockModels.createTrivialCube(ModBlocks.TEST_BLOCK.get());
         blockModels.registerSimpleFlatItemModel(ModBlocks.EXAMPLE_BLOCK.get());
 
 
