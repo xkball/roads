@@ -1,6 +1,9 @@
 package com.xkball.roads.multi;
 
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
+import org.jspecify.annotations.NonNull;
 
 import java.util.*;
 
@@ -10,7 +13,7 @@ import java.util.*;
  */
 public class Structure {
     private final List<String[]> structure;
-    private final Map<Character, BlockInfo> structureInfos;
+    private final Map<Character, @NonNull BlockInfo> structureInfos;
 
     private Structure(List<String[]> structure, Map<Character, BlockInfo> structureInfos) {
         this.structure = List.copyOf(structure);
@@ -41,6 +44,21 @@ public class Structure {
         public StructureBuilder setStructureBlockInfo(char c, Block block, int flags) {
             structureBlockInfos.put(c, new BlockInfo(block, flags));
             return this;
+        }
+
+        public StructureBuilder setStructureBlockInfo(char c, Block block) {
+            return setStructureBlockInfo(c, block, BlockInfo.ALL);
+        }
+
+        public StructureBuilder setStructureBlockInfo(char c, Identifier block, int flags) {
+            if(BuiltInRegistries.BLOCK.containsKey(block)) {
+                return setStructureBlockInfo(c, BuiltInRegistries.BLOCK.getValue(block), flags);
+            }
+            throw new IllegalArgumentException("Unknown block id " + block);
+        }
+
+        public StructureBuilder setStructureBlockInfo(char c, Identifier block) {
+            return setStructureBlockInfo(c, block, BlockInfo.ALL);
         }
 
         public Structure build() {

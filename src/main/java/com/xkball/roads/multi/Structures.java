@@ -6,8 +6,9 @@ import net.minecraft.world.level.block.Blocks;
 import static com.xkball.roads.multi.Structure.BlockInfo.*;
 
 
-//TODO 也许可以改成数据驱动？ by:skyinr
+// TODO:也许可以改成数据驱动？ by:skyinr
 public class Structures {
+    // TODO:可能需要做成懒加载，否则使用Identifier作为传参时，可能注册表里面会为null
     public static final Structure TEST_STRUCTURE = new Structure.StructureBuilder()
             .setStructureInfo(new String[]{
                     "XXX",
