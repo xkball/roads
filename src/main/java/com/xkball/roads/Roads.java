@@ -2,6 +2,7 @@ package com.xkball.roads;
 
 import com.xkball.roads.block.ModBlocks;
 import com.xkball.roads.blockentity.ModBlockEntities;
+import com.xkball.roads.datacomponents.ModDataComponents;
 import com.xkball.roads.item.ModItems;
 import org.slf4j.Logger;
 
@@ -37,6 +38,7 @@ public class Roads {
         ModItems.ITEMS.register(modEventBus);
         ModTabs.CREATIVE_MODE_TABS.register(modEventBus);
         ModBlockEntities.BLOCK_ENTITIES.register(modEventBus);
+        ModDataComponents.DATA_COMPONENTS.register(modEventBus);
 
         // Register ourselves for server and other game events we are interested in.
         // Note that this is necessary if and only if we want *this* class (Roads) to respond directly to events.

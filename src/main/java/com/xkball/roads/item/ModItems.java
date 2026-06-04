@@ -21,4 +21,6 @@ public class ModItems {
 
     public static final DeferredItem<BlockItem> TEST_BLOCK_ITEM =
             ITEMS.registerItem("test_block", p -> new RoadsStructureItem(ModBlocks.TEST_BLOCK.get(), p));
+    public static final DeferredItem<Item> STRUCTURAL_SELECTION_TOOL =
+            ITEMS.registerItem("structural_selection_tool", StructuralSelectionTool::new);
 }

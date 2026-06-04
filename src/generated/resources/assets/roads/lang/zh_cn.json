@@ -1,6 +1,7 @@
 {
   "block.roads.example_block": "占位方块",
   "item.roads.example_item": "占位物品",
+  "item.roads.structural_selection_tool": "结构选区工具",
   "item.roads.test_block": "结构测试方块",
   "itemGroup.roads": "Roads"
 }

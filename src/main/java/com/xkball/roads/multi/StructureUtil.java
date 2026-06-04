@@ -5,7 +5,9 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.phys.AABB;
 
 import java.util.*;
 
@@ -113,5 +115,16 @@ public class StructureUtil {
                 .append(structureInfoSB)
                 .append("\n.build()")
                 .toString();
+    }
+
+    public static String blocksToStructure(Level level, AABB aabb){
+        List<List<List<Block>>> blocks = new ArrayList<>();
+
+        BlockPos.betweenClosed(aabb).forEach(blockPos -> {
+            // TODO：根据坐标生成有序方块列表
+            level.getBlockState(blockPos).getBlock();
+        });
+
+        return blocksToStructure(blocks);
     }
 }

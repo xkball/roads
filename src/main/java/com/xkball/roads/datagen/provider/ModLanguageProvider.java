@@ -16,6 +16,7 @@ public class ModLanguageProvider extends LanguageProvider {
         add(ModItems.EXAMPLE_BLOCK_ITEM.get(),"占位方块");
 
         add(ModItems.TEST_BLOCK_ITEM.get(),"结构测试方块");
+        add(ModItems.STRUCTURAL_SELECTION_TOOL.get(),"结构选区工具");
 //        add(ModBlocks.EXAMPLE_BLOCK.get(),"占位方块");
     }
 }
