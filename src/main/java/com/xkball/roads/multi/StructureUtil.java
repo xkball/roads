@@ -115,7 +115,7 @@ public class StructureUtil {
         return mainSB
                 .append(structureInfoSB)
                 .append(structureBlockInfoSB)
-                .append("\n.build()")
+                .append(".build();")
                 .toString();
     }
 
