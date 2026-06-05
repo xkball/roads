@@ -44,7 +44,7 @@ public class ModCommands {
                                                             defaultValue)
                                                     .blockPos2();
                                             AABB aabb = AABB.encapsulatingFullBlocks(blockPos1, blockPos2);
-                                            Minecraft.getInstance().getChatListener().handleOverlay(Component.literal(StructureUtil.blocksToStructure(player.level(), aabb)));
+                                            Minecraft.getInstance().keyboardHandler.setClipboard(StructureUtil.blocksToStructure(player.level(), aabb));
                                         }
 
                                     }

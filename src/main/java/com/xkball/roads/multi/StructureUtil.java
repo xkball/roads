@@ -120,10 +120,20 @@ public class StructureUtil {
     public static String blocksToStructure(Level level, AABB aabb){
         List<List<List<Block>>> blocks = new ArrayList<>();
 
-        BlockPos.betweenClosed(aabb).forEach(blockPos -> {
-            // TODO：根据坐标生成有序方块列表
-            level.getBlockState(blockPos).getBlock();
-        });
+        Iterator<BlockPos> iterator = BlockPos.betweenClosed(aabb).iterator();
+        for (int i = 0; i < aabb.getZsize(); i++) {
+            List<List<Block>> blocksY = new ArrayList<>();
+            for (int j = 0; j < aabb.getYsize(); j++) {
+                List<Block> blocksX = new ArrayList<>();
+                for (int k = 0; k < aabb.getXsize(); k++) {
+                    if (iterator.hasNext()){
+                        blocksX.add(level.getBlockState(iterator.next()).getBlock());
+                    }
+                }
+                blocksY.add(blocksX);
+            }
+            blocks.add(blocksY);
+        }
 
         return blocksToStructure(blocks);
     }
