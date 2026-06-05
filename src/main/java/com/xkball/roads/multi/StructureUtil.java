@@ -64,6 +64,7 @@ public class StructureUtil {
      */
     public static String blocksToStructure(List<List<List<Block>>> blocks) {
         StringBuilder mainSB = new StringBuilder();
+        StringBuilder structureBlockInfoSB = new StringBuilder();
         StringBuilder structureInfoSB = new StringBuilder();
         Map<Block, Character> blockCharMap = new HashMap<>();
         char defineChar = 'A';
@@ -101,18 +102,19 @@ public class StructureUtil {
         try {
             blockCharMap.forEach((block, character) -> {
                 Optional<Identifier> identifier = BuiltInRegistries.BLOCK.getResourceKey(block).map(ResourceKey::identifier);
-                mainSB.append("\n.setStructureBlockInfo('").append(character).append("',")
+                structureBlockInfoSB.append("\n.setStructureBlockInfo('").append(character).append("',")
                         .append("Identifier.parse(\"")
                         .append(identifier.orElseThrow(() -> new RuntimeException("无法找到方块的Identifier: " + block.getName().getString())))
                         .append("\"))");
             });
-            mainSB.append("\n");
+            structureBlockInfoSB.append("\n");
         } catch (RuntimeException e) {
             Roads.LOGGER.error("无法找到方块的Identifier，无法生成结构字符串: {}", e.getMessage());
         }
 
         return mainSB
                 .append(structureInfoSB)
+                .append(structureBlockInfoSB)
                 .append("\n.build()")
                 .toString();
     }
