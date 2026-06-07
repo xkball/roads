@@ -14,6 +14,7 @@ public class ModLanguageProvider extends LanguageProvider {
         add("itemGroup.roads","Roads");
         add(ModItems.EXAMPLE_ITEM.get(),"占位物品");
         add(ModItems.EXAMPLE_BLOCK_ITEM.get(),"占位方块");
+        add(ModItems.COLLIDE_TEST_BLOCK_ITEM.get(),"碰撞测试方块");
 
 //        add(ModBlocks.EXAMPLE_BLOCK.get(),"占位方块");
     }
