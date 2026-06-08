@@ -62,14 +62,18 @@ public class StructureUtil {
      * @param blocks 有序的方块列表
      * @return 可用于粘贴进某多方块主类里的结构字符串
      */
-    public static String blocksToStructure(List<List<List<Block>>> blocks) {
+    public static String blocksToStructure(List<List<List<Block>>> blocks, String structureName) {
         StringBuilder mainSB = new StringBuilder();
         StringBuilder structureBlockInfoSB = new StringBuilder();
         StringBuilder structureInfoSB = new StringBuilder();
         Map<Block, Character> blockCharMap = new HashMap<>();
         char defineChar = 'A';
 
-        mainSB.append("new Structure.StructureBuilder()");
+        mainSB.append("public static final Structure ");
+        mainSB.append(structureName.toUpperCase());
+        mainSB.append(" = ");
+
+        mainSB.append("new Structure.StructureBuilder()\n");
 
         structureInfoSB.append(".setStructureInfo(");
         for (List<List<Block>> blockY : blocks) {
@@ -119,7 +123,7 @@ public class StructureUtil {
                 .toString();
     }
 
-    public static String blocksToStructure(Level level, AABB aabb){
+    public static String blocksToStructure(Level level, AABB aabb, String structureName) {
         List<List<List<Block>>> blocks = new ArrayList<>();
 
         Iterator<BlockPos> iterator = BlockPos.betweenClosed(aabb).iterator();
@@ -128,7 +132,7 @@ public class StructureUtil {
             for (int j = 0; j < aabb.getYsize(); j++) {
                 List<Block> blocksX = new ArrayList<>();
                 for (int k = 0; k < aabb.getXsize(); k++) {
-                    if (iterator.hasNext()){
+                    if (iterator.hasNext()) {
                         blocksX.add(level.getBlockState(iterator.next()).getBlock());
                     }
                 }
@@ -137,6 +141,6 @@ public class StructureUtil {
             blocks.add(blocksY);
         }
 
-        return blocksToStructure(blocks);
+        return blocksToStructure(blocks, structureName);
     }
 }

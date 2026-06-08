@@ -1,6 +1,7 @@
 package com.xkball.roads.command;
 
 import com.mojang.brigadier.Command;
+import com.mojang.brigadier.arguments.StringArgumentType;
 import com.xkball.roads.Roads;
 import com.xkball.roads.datacomponents.ModDataComponents;
 import com.xkball.roads.datacomponents.StructuralSelection;
@@ -10,7 +11,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
-import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.AABB;
@@ -25,7 +25,7 @@ public class ModCommands {
         event.getDispatcher().register(Commands.literal(Roads.MODID)
                 .then(Commands.literal("structural_selection")
                         .requires(Commands.hasPermission(Commands.LEVEL_ADMINS))
-                        .then(Commands.literal("build")
+                        .then(Commands.argument("structure_name", StringArgumentType.string())
                                 .executes(context -> {
                                     LocalPlayer player = Minecraft.getInstance().player;
                                     if (player != null) {
@@ -44,7 +44,7 @@ public class ModCommands {
                                                             defaultValue)
                                                     .blockPos2();
                                             AABB aabb = AABB.encapsulatingFullBlocks(blockPos1, blockPos2);
-                                            String structure = StructureUtil.blocksToStructure(player.level(), aabb);
+                                            String structure = StructureUtil.blocksToStructure(player.level(), aabb, StringArgumentType.getString(context, "structure_name"));
                                             System.out.println(structure);
                                             Minecraft.getInstance().keyboardHandler.setClipboard(structure);
                                         }
