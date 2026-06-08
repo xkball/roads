@@ -13,7 +13,8 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jspecify.annotations.NonNull;
 
-import java.util.List;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class RoadsStructureItem extends BlockItem {
 
@@ -33,48 +34,30 @@ public class RoadsStructureItem extends BlockItem {
             // 先检查结构能不能放
             // 如果能放就放
             Structure structure = block.getStructure();
-            List<List<List<Block>>> structureBlocks = StructureUtil.getStructureBlocks(structure);
+            Map<BlockPos, Block> structureBlockToMap = StructureUtil.getStructureBlockToMap(structure);
             BlockPos blockPos = StructureUtil.getStructureOffset(clickedPos, structure, block, clickedFace);
 
-            if (!canPlaceStructure(structureBlocks, blockPos, level)) return InteractionResult.FAIL;
+            if (!canPlaceStructure(structureBlockToMap, blockPos, level)) return InteractionResult.FAIL;
 
-            for (int y = 0; y < structureBlocks.size(); y++) {
-                List<List<Block>> blockY = structureBlocks.get(y);
-                for (int x = 0; x < blockY.size(); x++) {
-                    List<Block> blockX = blockY.get(x);
-                    for (int z = 0; z < blockX.size(); z++) {
-                        Block blockZ = blockX.get(z);
-                        BlockState blockState = blockZ.defaultBlockState();
-
-                        if (blockZ.isEmpty(blockState)) continue;
-
-                        level.setBlockAndUpdate(blockPos.offset(x, y, z), blockState);
-
-                    }
-                }
-            }
+            structureBlockToMap.forEach((blockPos1, block1) ->{
+                BlockState blockState = block1.defaultBlockState();
+                if (blockState.isEmpty()) return;
+                level.setBlockAndUpdate(blockPos.offset(blockPos1), blockState);
+            });
         }
 
         return InteractionResult.SUCCESS;
     }
 
-    private boolean canPlaceStructure(List<List<List<Block>>> structureBlocks, BlockPos blockPos, Level level) {
-        boolean result = true;
+    private boolean canPlaceStructure(Map<BlockPos, Block> structureBlocks, BlockPos blockPos, Level level) {
+        AtomicBoolean result = new AtomicBoolean(true);
         // 检查结构能不能放
-        for (int y = 0; y < structureBlocks.size(); y++) {
-            List<List<Block>> blockY = structureBlocks.get(y);
-            for (int x = 0; x < blockY.size(); x++) {
-                List<Block> blockX = blockY.get(x);
-                for (int z = 0; z < blockX.size(); z++) {
-                    Block blockZ = blockX.get(z);
+        structureBlocks.forEach((blockPos1, block) -> {
+            BlockState blockState = block.defaultBlockState();
+            if (blockState.isEmpty()) return;
+            result.set(result.get() & level.getBlockState(blockPos.offset(blockPos1)).canBeReplaced());
+        });
 
-                    if (blockZ.defaultBlockState().isEmpty()) continue;
-
-                    result &= level.getBlockState(blockPos.offset(x, y, z)).canBeReplaced();
-                }
-            }
-        }
-
-        return result;
+        return result.get();
     }
 }

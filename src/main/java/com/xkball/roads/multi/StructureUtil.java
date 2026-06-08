@@ -18,6 +18,28 @@ public class StructureUtil {
     private StructureUtil() {
     }
 
+    public static Map<BlockPos, Block> getStructureBlockToMap(Structure structure) {
+        List<String[]> structure1 = structure.getStructure();
+        Map<Character, Structure.BlockInfo> structureInfos = structure.getStructureInfos();
+
+        Map<BlockPos, Block> blocks = new HashMap<>();
+        BlockPos defaultPos = new BlockPos(0,0,0);
+
+        for (int y = 0; y < structure1.size(); y++) {
+            String[] blockY = structure1.get(y);
+            for (int x = 0; x < blockY.length; x++) {
+                String blockX = blockY[x];
+                for (int z = 0; z < blockX.length(); z++) {
+                    char blockZ = blockX.charAt(z);
+                    Structure.BlockInfo blockInfo = structureInfos.get(blockZ);
+                    blocks.put(defaultPos.offset(x, y, z), blockInfo.getBlock());
+                }
+            }
+        }
+
+        return blocks;
+    }
+
     /**
      *
      * @param structure 结构信息
