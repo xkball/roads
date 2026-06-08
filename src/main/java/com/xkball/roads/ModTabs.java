@@ -5,6 +5,8 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.ItemLike;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
@@ -27,6 +29,11 @@ public class ModTabs {
     public static void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == EXAMPLE_TAB.getKey()) {
             ModItems.ITEMS.getEntries().forEach(item -> event.accept(item.get()));
+            removeItem(event, ModItems.STRUCTURAL_SELECTION_TOOL);
         }
+    }
+
+    private static void removeItem(BuildCreativeModeTabContentsEvent event, ItemLike item) {
+        event.remove(new ItemStack(item), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
     }
 }

@@ -11,12 +11,17 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.commands.Commands;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.GlobalPos;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.AABB;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
+
+import java.io.IOException;
 
 @EventBusSubscriber(modid = Roads.MODID)
 public class ModCommands {
@@ -32,23 +37,33 @@ public class ModCommands {
                                         ItemStack mainHandItem = player.getMainHandItem();
                                         Item item = mainHandItem.getItem();
                                         if (item == ModItems.STRUCTURAL_SELECTION_TOOL.get()) {
-                                            StructuralSelection defaultValue = new StructuralSelection(
-                                                    new BlockPos(0, 0, 0),
-                                                    new BlockPos(0, 0, 0));
-                                            BlockPos blockPos1 = mainHandItem
-                                                    .getOrDefault(ModDataComponents.STRUCTURAL_SELECTION.get(),
-                                                            defaultValue)
-                                                    .blockPos1();
-                                            BlockPos blockPos2 = mainHandItem
-                                                    .getOrDefault(ModDataComponents.STRUCTURAL_SELECTION.get(),
-                                                            defaultValue)
-                                                    .blockPos2();
-                                            AABB aabb = AABB.encapsulatingFullBlocks(blockPos1, blockPos2);
-                                            String structure = StructureUtil.blocksToStructure(player.level(), aabb, StringArgumentType.getString(context, "structure_name"));
-                                            System.out.println(structure);
-                                            Minecraft.getInstance().keyboardHandler.setClipboard(structure);
-                                        }
+                                            try (Level level = player.level()) {
+                                                ResourceKey<Level> dimension = level.dimension();
+                                                StructuralSelection defaultValue = new StructuralSelection(
+                                                        new GlobalPos(dimension, new BlockPos(0, 0, 0)),
+                                                        new GlobalPos(dimension, new BlockPos(0, 0, 0)));
 
+                                                GlobalPos globalPos1 = mainHandItem
+                                                        .getOrDefault(ModDataComponents.STRUCTURAL_SELECTION.get(),
+                                                                defaultValue)
+                                                        .globalPos1();
+                                                GlobalPos globalPos2 = mainHandItem
+                                                        .getOrDefault(ModDataComponents.STRUCTURAL_SELECTION.get(),
+                                                                defaultValue)
+                                                        .globalPos2();
+
+                                                if (globalPos1.dimension() == level.dimension() && globalPos2.dimension() == level.dimension()) {
+                                                    AABB aabb = AABB.encapsulatingFullBlocks(globalPos1.pos(), globalPos2.pos());
+                                                    String structure = StructureUtil.blocksToStructure(level, aabb, StringArgumentType.getString(context, "structure_name"));
+                                                    if (structure.isEmpty()) return Command.SINGLE_SUCCESS;
+                                                    System.out.println(structure);
+                                                    Minecraft.getInstance().keyboardHandler.setClipboard(structure);
+                                                }
+
+                                            } catch (IOException e) {
+                                                e.printStackTrace();
+                                            }
+                                        }
                                     }
                                     return Command.SINGLE_SUCCESS;
                                 }))));

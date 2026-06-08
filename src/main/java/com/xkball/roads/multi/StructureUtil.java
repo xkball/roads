@@ -134,7 +134,7 @@ public class StructureUtil {
                 for (Block blockZ : blockX) {
                     if (defineChar == 'Z' + 1) {
                         Roads.LOGGER.error("定义的方块超过了26个，无法继续定义了");
-                        break;
+                        return "";
                     }
                     if (blockCharMap.containsKey(blockZ)) {
                         structureInfoSB.append(blockCharMap.get(blockZ));

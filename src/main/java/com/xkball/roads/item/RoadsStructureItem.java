@@ -39,7 +39,7 @@ public class RoadsStructureItem extends BlockItem {
 
             if (!canPlaceStructure(structureBlockToMap, blockPos, level)) return InteractionResult.FAIL;
 
-            structureBlockToMap.forEach((blockPos1, block1) ->{
+            structureBlockToMap.forEach((blockPos1, block1) -> {
                 BlockState blockState = block1.defaultBlockState();
                 if (blockState.isEmpty()) return;
                 level.setBlockAndUpdate(blockPos.offset(blockPos1), blockState);
