@@ -20,11 +20,11 @@ public class Structures {
                     "XXX"
             }, new String[]{
                     "XXX",
-                    "XYX",
+                    "XZX",
                     "XXX"
             })
             .setStructureBlockInfo('X', Blocks.AIR, NULL)
-            .setStructureBlockInfo('Y', ModBlocks.EXAMPLE_BLOCK.get(), ALL)
+            .setStructureBlockInfo('Y', ModBlocks.TEST_BLOCK.get(), ALL)
             .setStructureBlockInfo('Z', Blocks.REDSTONE_BLOCK, NULL)
             .build();
 }

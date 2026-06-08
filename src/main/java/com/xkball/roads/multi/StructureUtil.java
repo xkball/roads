@@ -2,11 +2,13 @@ package com.xkball.roads.multi;
 
 import com.xkball.roads.Roads;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Rotation;
 import net.minecraft.world.phys.AABB;
 
 import java.util.*;
@@ -46,13 +48,40 @@ public class StructureUtil {
     /**
      * 输入方块坐标，计算如果在当前方块坐标放置结构。结构中主方块的坐标
      *
-     * @param blockPos
+     * @param clickedPos
      * @param structure
      * @return
      */
-    public static BlockPos getStructureOffset(BlockPos blockPos, Structure structure) {
-        // TODO 未实现的方法
-        return blockPos;
+    public static BlockPos getStructureOffset(BlockPos clickedPos, Structure structure, Block mainBlock, Direction clickedFace) {
+
+        BlockPos mainBlockPos = null;
+        List<List<List<Block>>> structureBlocks = StructureUtil.getStructureBlocks(structure);
+
+        for (int y = 0; y < structureBlocks.size(); y++) {
+            List<List<Block>> blockY = structureBlocks.get(y);
+            for (int x = 0; x < blockY.size(); x++) {
+                List<Block> blockX = blockY.get(x);
+                for (int z = 0; z < blockX.size(); z++) {
+                    Block blockZ = blockX.get(z);
+                    if (blockZ == mainBlock) {
+                        mainBlockPos = new BlockPos(x, -y, z);
+                    }
+                }
+            }
+        }
+        if (mainBlockPos == null) {
+            Roads.LOGGER.error("结构中没有找到主方块，无法计算结构偏移，返回点击位置");
+            return clickedPos;
+        }
+
+
+        clickedPos = clickedPos.relative(clickedFace);
+
+        mainBlockPos = mainBlockPos.rotate(Rotation.CLOCKWISE_180);
+
+        clickedPos = clickedPos.offset(mainBlockPos);
+
+        return clickedPos;
     }
 
 
@@ -80,18 +109,18 @@ public class StructureUtil {
             structureInfoSB.append("new String[]{\n");
             for (List<Block> blockX : blockY) {
                 structureInfoSB.append("\"");
-                for (Block block : blockX) {
+                for (Block blockZ : blockX) {
                     if (defineChar == 'Z' + 1) {
                         Roads.LOGGER.error("定义的方块超过了26个，无法继续定义了");
                         break;
                     }
-                    if (blockCharMap.containsKey(block)) {
-                        structureInfoSB.append(blockCharMap.get(block));
+                    if (blockCharMap.containsKey(blockZ)) {
+                        structureInfoSB.append(blockCharMap.get(blockZ));
                         continue;
                     }
                     structureInfoSB.append(defineChar);
 
-                    blockCharMap.put(block, defineChar);
+                    blockCharMap.put(blockZ, defineChar);
 
                     defineChar++;
 

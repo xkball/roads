@@ -1,6 +1,5 @@
 package com.xkball.roads.blockentity;
 
-import com.xkball.roads.multi.Structure;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
