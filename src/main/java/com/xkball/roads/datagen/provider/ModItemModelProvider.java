@@ -22,6 +22,8 @@ public class ModItemModelProvider extends ModelProvider {
 
         blockModels.createTrivialCube(ModBlocks.EXAMPLE_BLOCK.get());
         blockModels.createTrivialCube(ModBlocks.TEST_BLOCK.get());
+        blockModels.createTrivialCube(ModBlocks.FAKE_MAIN_BLOCK.get());
+        blockModels.createTrivialCube(ModBlocks.FAKE_STRUCTURE_BLOCK.get());
         blockModels.registerSimpleFlatItemModel(ModBlocks.EXAMPLE_BLOCK.get());
 
 

@@ -16,4 +16,16 @@ public class ModBlockEntities {
                     TestBlockEntity::new,
                     false,
                     ModBlocks.TEST_BLOCK.get()));
+
+    public static final Supplier<BlockEntityType<FakeMainBlockEntity>> FAKE_MAIN_BLOCK_ENTITY = BLOCK_ENTITIES.register("fake_main_block_entity", () ->
+            new BlockEntityType<>(
+                    FakeMainBlockEntity::new,
+                    false,
+                    ModBlocks.FAKE_MAIN_BLOCK.get()));
+
+    public static final Supplier<BlockEntityType<FakeStructureBlockEntity>> FAKE_STRUCTURE_BLOCK_ENTITY = BLOCK_ENTITIES.register("fake_structure_block_entity", () ->
+            new BlockEntityType<>(
+                    FakeStructureBlockEntity::new,
+                    false,
+                    ModBlocks.FAKE_STRUCTURE_BLOCK.get()));
 }

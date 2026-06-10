@@ -1,0 +1,7 @@
+{
+  "variants": {
+    "": {
+      "model": "roads:block/fake_main_block"
+    }
+  }
+}

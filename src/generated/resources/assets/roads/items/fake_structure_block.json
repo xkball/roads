@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "roads:block/fake_structure_block"
+  }
+}

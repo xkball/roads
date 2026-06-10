@@ -23,4 +23,9 @@ public class ModItems {
             ITEMS.registerItem("test_block", p -> new RoadsStructureItem(ModBlocks.TEST_BLOCK.get(), p));
     public static final DeferredItem<Item> STRUCTURAL_SELECTION_TOOL =
             ITEMS.registerItem("structural_selection_tool", StructuralSelectionTool::new);
+
+    public static final DeferredItem<BlockItem> FAKE_MAIN_BLOCK_ITEM =
+            ITEMS.registerItem("fake_main_block", p -> new RoadsStructureItem(ModBlocks.FAKE_MAIN_BLOCK.get(), p));
+    public static final DeferredItem<BlockItem> FAKE_STRUCTURE_BLOCK_ITEM =
+            ITEMS.registerSimpleBlockItem("fake_structure_block", ModBlocks.FAKE_STRUCTURE_BLOCK);
 }
