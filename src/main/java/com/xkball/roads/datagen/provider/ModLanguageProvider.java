@@ -12,8 +12,6 @@ public class ModLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         add("itemGroup.roads","Roads");
-        add(ModItems.EXAMPLE_ITEM.get(),"占位物品");
-        add(ModItems.EXAMPLE_BLOCK_ITEM.get(),"占位方块");
 
         add(ModItems.TEST_BLOCK_ITEM.get(),"结构测试方块");
         add(ModItems.STRUCTURAL_SELECTION_TOOL.get(),"结构选区工具");

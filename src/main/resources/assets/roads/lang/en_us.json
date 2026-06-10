@@ -1,7 +1,5 @@
 {
-  "itemGroup.roads": "Example Mod Tab",
-  "block.roads.example_block": "Example Block",
-  "item.roads.example_item": "Example Item",
+  "itemGroup.roads": "Roads",
   "item.roads.fake_main_block": "Fake Main Block",
   "item.roads.fake_structure_block": "Fake Structure Block",
 

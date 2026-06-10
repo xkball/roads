@@ -20,9 +20,9 @@ public class ModTabs {
 
     // Creates a creative tab with the id "roads:example_tab" for the example item, that is placed after the combat tab
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.roads")) //The language key for the title of your CreativeModeTab
+            .title(Component.translatable("itemGroup.roads"))
             .withTabsBefore(CreativeModeTabs.COMBAT)
-            .icon(() -> ModItems.EXAMPLE_ITEM.get().getDefaultInstance())
+            .icon(() -> ModItems.STRUCTURAL_SELECTION_TOOL.get().getDefaultInstance())
             .build());
 
     @SubscribeEvent
