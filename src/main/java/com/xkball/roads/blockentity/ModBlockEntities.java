@@ -28,4 +28,10 @@ public class ModBlockEntities {
                     FakeStructureBlockEntity::new,
                     false,
                     ModBlocks.FAKE_STRUCTURE_BLOCK.get()));
+
+    public static final Supplier<BlockEntityType<GeneratorBlockEntity>> GENERATOR_BLOCK_ENTITY = BLOCK_ENTITIES.register("generator_block_entity", () ->
+            new BlockEntityType<>(
+                    GeneratorBlockEntity::new,
+                    false,
+                    ModBlocks.GENERATOR_BLOCK.get()));
 }

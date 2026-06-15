@@ -13,4 +13,5 @@ public class ModBlocks {
     public static final DeferredBlock<Block> TEST_BLOCK = BLOCKS.registerBlock("test_block", p -> new TestBlock(p.mapColor(MapColor.STONE)));
     public static final DeferredBlock<Block> FAKE_MAIN_BLOCK = BLOCKS.registerBlock("fake_main_block", p -> new FakeMainBlock(p.mapColor(MapColor.STONE)));
     public static final DeferredBlock<Block> FAKE_STRUCTURE_BLOCK = BLOCKS.registerBlock("fake_structure_block", p -> new FakeStructureBlock(p.mapColor(MapColor.STONE)));
+    public static final DeferredBlock<Block> GENERATOR_BLOCK = BLOCKS.registerBlock("generator_block", p -> new GeneratorBlock(p.mapColor(MapColor.METAL)));
 }

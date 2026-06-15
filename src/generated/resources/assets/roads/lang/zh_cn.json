@@ -1,6 +1,7 @@
 {
   "block.roads.fake_structure_block": "假结构方块",
   "item.roads.fake_main_block": "假主方块",
+  "item.roads.generator_block": "发电机",
   "item.roads.structural_selection_tool": "结构选区工具",
   "item.roads.test_block": "结构测试方块",
   "itemGroup.roads": "Roads"

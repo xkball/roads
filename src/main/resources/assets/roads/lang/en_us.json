@@ -2,6 +2,7 @@
   "itemGroup.roads": "Roads",
   "item.roads.fake_main_block": "Fake Main Block",
   "item.roads.fake_structure_block": "Fake Structure Block",
+  "item.roads.generator_block": "Generator",
 
   "roads.configuration.title": "Roads Configs",
   "roads.configuration.section.roads.common.toml": "Roads Configs",

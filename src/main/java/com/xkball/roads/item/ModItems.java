@@ -20,4 +20,6 @@ public class ModItems {
             ITEMS.registerItem("fake_main_block", p -> new RoadsStructureItem(ModBlocks.FAKE_MAIN_BLOCK.get(), p));
     public static final DeferredItem<BlockItem> FAKE_STRUCTURE_BLOCK_ITEM =
             ITEMS.registerSimpleBlockItem("fake_structure_block", ModBlocks.FAKE_STRUCTURE_BLOCK);
+    public static final DeferredItem<BlockItem> GENERATOR_BLOCK_ITEM =
+            ITEMS.registerItem("generator_block", p -> new RoadsStructureItem(ModBlocks.GENERATOR_BLOCK.get(), p));
 }
