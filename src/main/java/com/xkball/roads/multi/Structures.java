@@ -2,8 +2,7 @@ package com.xkball.roads.multi;
 
 import com.xkball.roads.block.ModBlocks;
 import net.minecraft.world.level.block.Blocks;
-
-import static com.xkball.roads.multi.Structure.BlockInfo.*;
+import net.neoforged.neoforge.capabilities.Capabilities;
 
 
 // TODO:也许可以改成数据驱动？ by:skyinr
@@ -23,8 +22,8 @@ public class Structures {
                     "XZX",
                     "XXX"
             })
-            .setStructureBlockInfo('X', Blocks.AIR, NULL)
-            .setStructureBlockInfo('Y', ModBlocks.TEST_BLOCK.get(), ALL)
-            .setStructureBlockInfo('Z', Blocks.REDSTONE_BLOCK, NULL)
+            .setStructureBlockInfo('X', Blocks.AIR)
+            .setStructureBlockInfo('Y', ModBlocks.TEST_BLOCK.get(), Structure.BlockInfo.IOMode.BOTH, Capabilities.Item.BLOCK, Capabilities.Fluid.BLOCK, Capabilities.Energy.BLOCK)
+            .setStructureBlockInfo('Z', Blocks.REDSTONE_BLOCK)
             .build();
 }

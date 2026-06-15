@@ -3,6 +3,7 @@ package com.xkball.roads.multi;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
+import net.neoforged.neoforge.capabilities.BlockCapability;
 import org.jspecify.annotations.NonNull;
 
 import java.util.*;
@@ -37,28 +38,24 @@ public class Structure {
             return this;
         }
 
-        /**
-         * @param flags Check com.xkball.roads.multi.Structure.BlockInfo
-         *
-         */
-        public StructureBuilder setStructureBlockInfo(char c, Block block, int flags) {
-            structureBlockInfos.put(c, new BlockInfo(block, flags));
+        public StructureBuilder setStructureBlockInfo(char c, Block block, BlockInfo.IOMode ioMode, BlockCapability<?, ?>... capabilities) {
+            structureBlockInfos.put(c, new BlockInfo(block, ioMode, capabilities));
             return this;
         }
 
         public StructureBuilder setStructureBlockInfo(char c, Block block) {
-            return setStructureBlockInfo(c, block, BlockInfo.ALL);
+            return setStructureBlockInfo(c, block, BlockInfo.IOMode.NONE);
         }
 
-        public StructureBuilder setStructureBlockInfo(char c, Identifier block, int flags) {
+        public StructureBuilder setStructureBlockInfo(char c, Identifier block, BlockInfo.IOMode ioMode, BlockCapability<?, ?>... capabilities) {
             if(BuiltInRegistries.BLOCK.containsKey(block)) {
-                return setStructureBlockInfo(c, BuiltInRegistries.BLOCK.getValue(block), flags);
+                return setStructureBlockInfo(c, BuiltInRegistries.BLOCK.getValue(block), ioMode, capabilities);
             }
             throw new IllegalArgumentException("Unknown block id " + block);
         }
 
         public StructureBuilder setStructureBlockInfo(char c, Identifier block) {
-            return setStructureBlockInfo(c, block, BlockInfo.ALL);
+            return setStructureBlockInfo(c, block, BlockInfo.IOMode.NONE);
         }
 
         public Structure build() {
@@ -68,31 +65,38 @@ public class Structure {
 
 
     public static class BlockInfo {
-        private BlockInfo(Block block, int flags) {
-            this.block = block;
-            this.flags = flags;
+
+        public enum IOMode {
+            NONE,
+            INPUT,
+            OUTPUT,
+            BOTH
         }
 
-        //TODO 拆成in/out的enum和直接对cap的引用
-
-        public static final int NULL = 0b00000;
-        public static final int INPUT = 0b00001;
-        public static final int OUTPUT = 0b00010;
-        public static final int ITEM = 0b00100;
-        public static final int FLUID = 0b01000;
-        public static final int ENERGY = 0b10000;
-
-        public static final int ALL = INPUT | OUTPUT | ITEM | FLUID | ENERGY;
+        private BlockInfo(Block block, IOMode ioMode, BlockCapability<?, ?>... capabilities) {
+            this.block = block;
+            this.ioMode = ioMode;
+            this.capabilities = Set.of(capabilities);
+        }
 
         private final Block block;
-        private final int flags;
+        private final IOMode ioMode;
+        private final Set<BlockCapability<?, ?>> capabilities;
 
         public Block getBlock() {
             return block;
         }
 
-        public int getFlags() {
-            return flags;
+        public IOMode getIOMode() {
+            return ioMode;
+        }
+
+        public Set<BlockCapability<?, ?>> getCapabilities() {
+            return capabilities;
+        }
+
+        public boolean hasCapability() {
+            return !capabilities.isEmpty();
         }
     }
 
