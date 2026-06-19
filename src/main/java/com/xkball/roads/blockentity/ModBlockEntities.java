@@ -3,6 +3,7 @@ package com.xkball.roads.blockentity;
 import com.xkball.roads.Roads;
 import com.xkball.roads.block.ModBlocks;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
@@ -10,6 +11,8 @@ import java.util.function.Supplier;
 
 public class ModBlockEntities {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, Roads.MODID);
+    // ? extends BaseRoadsBlockEntity
+    public static final DeferredRegister<BlockEntityType<?>> BASE_BLOCK_ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, Roads.MODID);
 
     public static final Supplier<BlockEntityType<TestBlockEntity>> TEST_BLOCK_ENTITY = BLOCK_ENTITIES.register("test_block_entity", () ->
             new BlockEntityType<>(
@@ -29,9 +32,14 @@ public class ModBlockEntities {
                     false,
                     ModBlocks.FAKE_STRUCTURE_BLOCK.get()));
 
-    public static final Supplier<BlockEntityType<GeneratorBlockEntity>> GENERATOR_BLOCK_ENTITY = BLOCK_ENTITIES.register("generator_block_entity", () ->
-            new BlockEntityType<>(
-                    GeneratorBlockEntity::new,
-                    false,
-                    ModBlocks.GENERATOR_BLOCK.get()));
+    public static final Supplier<BlockEntityType<GeneratorBlockEntity>> GENERATOR_BLOCK_ENTITY = ModBlockEntities.registerBaseBlockEntity("generator_block_entity",
+            GeneratorBlockEntity::new,
+            false,
+            ModBlocks.GENERATOR_BLOCK.get());
+
+    public static <T extends BaseRoadsBlockEntity> Supplier<BlockEntityType<T>> registerBaseBlockEntity(String name, BlockEntityType.BlockEntitySupplier<? extends T> factory, boolean onlyOpCanSetNbt, Block... validBlocks) {
+        return BASE_BLOCK_ENTITIES.register(name, () -> new BlockEntityType<>(
+                factory, onlyOpCanSetNbt, validBlocks
+        ));
+    }
 }
