@@ -22,10 +22,10 @@ public class RegisterCapabilities {
                     (be, side) -> be.energyHandler);
             event.registerBlockEntity(Capabilities.Fluid.BLOCK,
                     blockEntityType,
-                    (be, side) -> be.fluidStacksResourceHandler);
+                    (be, side) -> be.fluidHandler);
             event.registerBlockEntity(Capabilities.Item.BLOCK,
                     blockEntityType,
-                    (be, side) -> be.itemStackHandler);
+                    (be, side) -> be.itemHandler);
         });
 
     }

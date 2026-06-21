@@ -8,9 +8,12 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
 import net.minecraft.world.level.storage.ValueOutput;
+import net.neoforged.neoforge.transfer.ResourceHandler;
 import net.neoforged.neoforge.transfer.energy.EnergyHandler;
 import net.neoforged.neoforge.transfer.energy.SimpleEnergyHandler;
+import net.neoforged.neoforge.transfer.fluid.FluidResource;
 import net.neoforged.neoforge.transfer.fluid.FluidStacksResourceHandler;
+import net.neoforged.neoforge.transfer.item.ItemResource;
 import net.neoforged.neoforge.transfer.item.ItemStacksResourceHandler;
 import org.jetbrains.annotations.NotNull;
 import org.jspecify.annotations.NonNull;
@@ -23,8 +26,8 @@ public abstract class BaseRoadsBlockEntity extends BlockEntity {
         }
     };
 
-    public FluidStacksResourceHandler fluidStacksResourceHandler = new FluidStacksResourceHandler(getFluidSize(), getMaxFluid());
-    public ItemStacksResourceHandler itemStackHandler = new ItemStacksResourceHandler(getItemSize());
+    public ResourceHandler<FluidResource> fluidHandler = new FluidStacksResourceHandler(getFluidSize(), getMaxFluid());
+    public ResourceHandler<ItemResource> itemHandler = new ItemStacksResourceHandler(getItemSize());
 
 
     public BaseRoadsBlockEntity(BlockEntityType<?> type, BlockPos worldPosition, BlockState blockState) {
@@ -54,16 +57,16 @@ public abstract class BaseRoadsBlockEntity extends BlockEntity {
     protected void loadAdditional(@NonNull ValueInput input) {
         super.loadAdditional(input);
         ((SimpleEnergyHandler) energyHandler).deserialize(input);
-        fluidStacksResourceHandler.deserialize(input);
-        itemStackHandler.deserialize(input);
+        ((FluidStacksResourceHandler) fluidHandler).deserialize(input);
+        ((ItemStacksResourceHandler) itemHandler).deserialize(input);
     }
 
     @Override
     protected void saveAdditional(@NonNull ValueOutput output) {
         super.saveAdditional(output);
         ((SimpleEnergyHandler) energyHandler).serialize(output);
-        fluidStacksResourceHandler.serialize(output);
-        itemStackHandler.serialize(output);
+        ((FluidStacksResourceHandler) fluidHandler).serialize(output);
+        ((ItemStacksResourceHandler) itemHandler).serialize(output);
     }
 
 }
