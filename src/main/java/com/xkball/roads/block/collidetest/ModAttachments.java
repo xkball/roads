@@ -17,33 +17,33 @@ public class ModAttachments {
     public static final DeferredRegister<AttachmentType<?>> ATTACHMENTS =
             DeferredRegister.create(NeoForgeRegistries.ATTACHMENT_TYPES, Roads.MODID);
 
-    private static final StreamCodec<RegistryFriendlyByteBuf, Map<BlockPos, QuadCollection>> MAP_STREAM_CODEC =
+    private static final StreamCodec<RegistryFriendlyByteBuf, Map<BlockPos, TriangleCollection>> MAP_STREAM_CODEC =
             new StreamCodec<>() {
                 @Override
-                public Map<BlockPos, QuadCollection> decode(RegistryFriendlyByteBuf buf) {
+                public Map<BlockPos, TriangleCollection> decode(RegistryFriendlyByteBuf buf) {
                     int size = buf.readVarInt();
-                    Map<BlockPos, QuadCollection> map = new HashMap<>(size);
+                    Map<BlockPos, TriangleCollection> map = new HashMap<>(size);
                     for (int i = 0; i < size; i++) {
                         BlockPos pos = BlockPos.STREAM_CODEC.decode(buf);
-                        QuadCollection qc = QuadCollection.STREAM_CODEC.decode(buf);
-                        map.put(pos, qc);
+                        TriangleCollection collection = TriangleCollection.STREAM_CODEC.decode(buf);
+                        map.put(pos, collection);
                     }
                     return map;
                 }
 
                 @Override
-                public void encode(RegistryFriendlyByteBuf buf, Map<BlockPos, QuadCollection> map) {
+                public void encode(RegistryFriendlyByteBuf buf, Map<BlockPos, TriangleCollection> map) {
                     buf.writeVarInt(map.size());
                     for (var entry : map.entrySet()) {
                         BlockPos.STREAM_CODEC.encode(buf, entry.getKey());
-                        QuadCollection.STREAM_CODEC.encode(buf, entry.getValue());
+                        TriangleCollection.STREAM_CODEC.encode(buf, entry.getValue());
                     }
                 }
             };
 
-    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Map<BlockPos, QuadCollection>>> QUAD_COLLECTION =
-            ATTACHMENTS.register("quad_collection", () -> AttachmentType.<Map<BlockPos, QuadCollection>>builder(() -> new HashMap<>())
-                    .serialize(Codec.unboundedMap(BlockPos.CODEC, QuadCollection.CODEC).fieldOf("data"))
+    public static final DeferredHolder<AttachmentType<?>, AttachmentType<Map<BlockPos, TriangleCollection>>> TRIANGLE_COLLECTION =
+            ATTACHMENTS.register("triangle_collection", () -> AttachmentType.<Map<BlockPos, TriangleCollection>>builder(() -> new HashMap<>())
+                    .serialize(Codec.unboundedMap(BlockPos.CODEC, TriangleCollection.CODEC).fieldOf("data"))
                     .sync(MAP_STREAM_CODEC)
                     .build());
 }
