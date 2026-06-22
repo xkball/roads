@@ -2,7 +2,9 @@
   "required": true,
   "package": "com.xkball.roads.mixin",
   "compatibilityLevel": "JAVA_25",
-  "mixins": [],
+  "mixins": [
+    "EntityMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   },

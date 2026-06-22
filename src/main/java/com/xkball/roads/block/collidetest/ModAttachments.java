@@ -1,6 +1,7 @@
 package com.xkball.roads.block.collidetest;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import com.xkball.roads.Roads;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,9 +42,29 @@ public class ModAttachments {
                 }
             };
 
+    private static final Codec<Map<BlockPos, TriangleCollection>> MAP_CODEC = Entry.CODEC.listOf().xmap(
+            entries -> {
+                Map<BlockPos, TriangleCollection> map = new HashMap<>();
+                for (Entry entry : entries) {
+                    map.put(entry.pos(), entry.collection());
+                }
+                return map;
+            },
+            map -> map.entrySet().stream()
+                    .map(entry -> new Entry(entry.getKey(), entry.getValue()))
+                    .toList()
+    );
+
     public static final DeferredHolder<AttachmentType<?>, AttachmentType<Map<BlockPos, TriangleCollection>>> TRIANGLE_COLLECTION =
             ATTACHMENTS.register("triangle_collection", () -> AttachmentType.<Map<BlockPos, TriangleCollection>>builder(() -> new HashMap<>())
-                    .serialize(Codec.unboundedMap(BlockPos.CODEC, TriangleCollection.CODEC).fieldOf("data"))
+                    .serialize(MAP_CODEC.fieldOf("data"))
                     .sync(MAP_STREAM_CODEC)
                     .build());
+
+    private record Entry(BlockPos pos, TriangleCollection collection) {
+        private static final Codec<Entry> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+                BlockPos.CODEC.fieldOf("pos").forGetter(Entry::pos),
+                TriangleCollection.CODEC.fieldOf("collection").forGetter(Entry::collection)
+        ).apply(instance, Entry::new));
+    }
 }
