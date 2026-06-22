@@ -2,7 +2,6 @@ package com.xkball.roads.block;
 
 import com.xkball.roads.Roads;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -13,4 +12,6 @@ public class ModBlocks {
     public static final DeferredBlock<Block> EXAMPLE_BLOCK = BLOCKS.registerSimpleBlock("example_block", p -> p.mapColor(MapColor.STONE));
 
     public static final DeferredBlock<CollideTestBlock> COLLIDE_TEST_BLOCK = BLOCKS.registerBlock("collide_test_block",CollideTestBlock::new);
+
+    public static final DeferredBlock<CollideTestBlock> COLLIDE_TEST_BLOCK2 = BLOCKS.registerBlock("collide_test_block2", CollideTestBlock::new);
 }
