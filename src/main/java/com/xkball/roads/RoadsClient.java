@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.mojang.serialization.JsonOps;
 import com.xkball.roads.block.collidetest.TriangleCollection;
+import com.xkball.roads.client.LocalPlayerCollideMomentumDebugEntry;
 import java.io.IOException;
 import java.io.Writer;
 import java.nio.file.Files;
@@ -20,6 +21,8 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.debug.DebugScreenEntryStatus;
+import net.minecraft.client.gui.components.debug.DebugScreenProfile;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
@@ -31,22 +34,19 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 import net.neoforged.neoforge.client.event.RegisterClientCommandsEvent;
+import net.neoforged.neoforge.client.event.RegisterDebugEntriesEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 import org.joml.Vector3f;
 import org.joml.Vector3fc;
 
-// This class will not load on dedicated servers. Accessing client side code from here is safe.
 @Mod(value = Roads.MODID, dist = Dist.CLIENT)
-// You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
 @EventBusSubscriber(modid = Roads.MODID, value = Dist.CLIENT)
 public class RoadsClient {
     private static final Gson GSON = new GsonBuilder().setPrettyPrinting().create();
+    private static final Identifier LOCAL_PLAYER_COLLIDE_MOMENTUM = Identifier.fromNamespaceAndPath(Roads.MODID, "local_player_collide_momentum");
 
     public RoadsClient(ModContainer container) {
-        // Allows NeoForge to create a config screen for this mod's configs.
-        // The config screen is accessed by going to the Mods screen > clicking on your mod > clicking on config.
-        // Do not forget to add translations for your config options to the en_us.json file.
         container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
     }
 
@@ -63,6 +63,12 @@ public class RoadsClient {
                 .then(Commands.literal("export_triangles")
                         .then(Commands.argument("block", BlockStateArgument.block(event.getBuildContext()))
                                 .executes(context -> exportTriangles(context.getSource(), BlockStateArgument.getBlock(context, "block").getState())))));
+    }
+
+    @SubscribeEvent
+    static void onRegisterDebugEntries(RegisterDebugEntriesEvent event) {
+        event.register(LOCAL_PLAYER_COLLIDE_MOMENTUM, new LocalPlayerCollideMomentumDebugEntry());
+        event.includeInProfile(LOCAL_PLAYER_COLLIDE_MOMENTUM, DebugScreenProfile.DEFAULT, DebugScreenEntryStatus.IN_OVERLAY);
     }
 
     private static int exportTriangles(CommandSourceStack source, BlockState state) {

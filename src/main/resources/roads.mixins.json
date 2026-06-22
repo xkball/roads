@@ -5,6 +5,9 @@
   "mixins": [
     "EntityMixin"
   ],
+  "client": [
+    "LocalPlayerMixin"
+  ],
   "injectors": {
     "defaultRequire": 1
   },
