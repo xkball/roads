@@ -9,9 +9,11 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 // 用于放置结构检查方法等等
 public class StructureUtil {
@@ -193,5 +195,17 @@ public class StructureUtil {
         }
 
         return blocksToStructure(blocks, structureName);
+    }
+
+    public static boolean canPlaceStructure(Map<BlockPos, Block> structureBlocks, BlockPos blockPos, Level level) {
+        AtomicBoolean result = new AtomicBoolean(true);
+        // 检查结构能不能放
+        structureBlocks.forEach((blockPos1, block) -> {
+            BlockState blockState = block.defaultBlockState();
+            if (blockState.isEmpty()) return;
+            result.set(result.get() & level.getBlockState(blockPos.offset(blockPos1)).canBeReplaced());
+        });
+
+        return result.get();
     }
 }

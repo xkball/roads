@@ -37,7 +37,7 @@ public class RoadsStructureItem extends BlockItem {
             Map<BlockPos, Block> structureBlockToMap = StructureUtil.getStructureBlockToMap(structure);
             BlockPos blockPos = StructureUtil.getStructureOffset(clickedPos, structure, block, clickedFace);
 
-            if (!canPlaceStructure(structureBlockToMap, blockPos, level)) return InteractionResult.FAIL;
+            if (!StructureUtil.canPlaceStructure(structureBlockToMap, blockPos, level)) return InteractionResult.FAIL;
 
             structureBlockToMap.forEach((blockPos1, block1) -> {
                 BlockState blockState = block1.defaultBlockState();
@@ -49,15 +49,5 @@ public class RoadsStructureItem extends BlockItem {
         return InteractionResult.SUCCESS;
     }
 
-    private boolean canPlaceStructure(Map<BlockPos, Block> structureBlocks, BlockPos blockPos, Level level) {
-        AtomicBoolean result = new AtomicBoolean(true);
-        // 检查结构能不能放
-        structureBlocks.forEach((blockPos1, block) -> {
-            BlockState blockState = block.defaultBlockState();
-            if (blockState.isEmpty()) return;
-            result.set(result.get() & level.getBlockState(blockPos.offset(blockPos1)).canBeReplaced());
-        });
 
-        return result.get();
-    }
 }
