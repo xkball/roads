@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "roads:block/road_builder",
+      "y": 90
+    },
+    "facing=north": {
+      "model": "roads:block/road_builder"
+    },
+    "facing=south": {
+      "model": "roads:block/road_builder",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "roads:block/road_builder",
+      "y": 270
+    }
+  }
+}

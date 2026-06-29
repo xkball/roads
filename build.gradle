@@ -126,7 +126,7 @@ dependencies {
             prefer '2.4.2'
         }
     }
-    implementation "com.xkball:x3d_map:1.0.1"
+    implementation "com.xkball:x3d_map:1.0.3"
     testImplementation "org.junit.jupiter:junit-jupiter:5.11.4"
     testRuntimeOnly "org.junit.platform:junit-platform-launcher"
 

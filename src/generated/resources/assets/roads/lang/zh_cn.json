@@ -1,5 +1,6 @@
 {
   "block.roads.example_block": "占位方块",
+  "block.roads.road_builder": "道路建造机",
   "item.roads.example_item": "占位物品",
   "itemGroup.roads": "Roads"
 }

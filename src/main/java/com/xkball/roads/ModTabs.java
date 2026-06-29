@@ -28,6 +28,7 @@ public class ModTabs {
     public static void addCreative(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == EXAMPLE_TAB.getKey()) {
             event.accept(ModItems.EXAMPLE_BLOCK_ITEM);
+            event.accept(ModItems.ROAD_BUILDER);
         }
     }
 }

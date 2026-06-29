@@ -1,6 +1,7 @@
 {
   "itemGroup.roads": "Example Mod Tab",
   "block.roads.example_block": "Example Block",
+  "block.roads.road_builder": "Road Builder",
   "item.roads.example_item": "Example Item",
 
   "roads.configuration.title": "Roads Configs",
