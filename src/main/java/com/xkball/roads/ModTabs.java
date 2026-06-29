@@ -13,10 +13,9 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 @EventBusSubscriber(modid = Roads.MODID)
 public class ModTabs {
-    // Create a Deferred Register to hold CreativeModeTabs which will all be registered under the "roads" namespace
-    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Roads.MODID);
 
-    // Creates a creative tab with the id "roads:example_tab" for the example item, that is placed after the combat tab
+    public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Roads.MODID);
+    
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.roads")) //The language key for the title of your CreativeModeTab
             .withTabsBefore(CreativeModeTabs.COMBAT)
