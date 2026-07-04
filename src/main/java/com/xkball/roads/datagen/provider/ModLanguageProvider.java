@@ -12,9 +12,5 @@ public class ModLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         add("itemGroup.roads","Roads");
-        add(ModItems.EXAMPLE_ITEM.get(),"占位物品");
-        add(ModItems.EXAMPLE_BLOCK_ITEM.get(),"占位方块");
-
-//        add(ModBlocks.EXAMPLE_BLOCK.get(),"占位方块");
     }
 }

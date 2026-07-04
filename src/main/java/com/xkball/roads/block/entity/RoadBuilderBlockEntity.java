@@ -10,6 +10,7 @@ import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.protocol.Packet;
 import net.minecraft.network.protocol.game.ClientGamePacketListener;
 import net.minecraft.network.protocol.game.ClientboundBlockEntityDataPacket;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.storage.ValueInput;
@@ -26,7 +27,7 @@ public class RoadBuilderBlockEntity extends BlockEntity {
 
     public RoadBuilderBlockEntity(BlockPos pos, BlockState blockState) {
         super(ModBlocks.ROAD_BUILDER_BLOCK_ENTITY.get(), pos, blockState);
-        resetControlPoints(blockState);
+        resetControlPointsTest();
     }
 
     public List<Vector3f> getControlPoints() {
@@ -74,7 +75,15 @@ public class RoadBuilderBlockEntity extends BlockEntity {
             controlPoints.add(new Vector3f(x, y, z));
         }
         if (controlPoints.isEmpty()) {
-            resetControlPoints(getBlockState());
+            resetControlPointsTest();
+        }
+    }
+
+    private void resetControlPointsTest() {
+        controlPoints.clear();
+        RandomSource random = RandomSource.create();
+        for (int i = 0; i < 10; i++) {
+            controlPoints.add(new Vector3f(random.nextFloat() * 16 - 8, random.nextFloat() * 16 - 8, random.nextFloat() * 16 - 8));
         }
     }
 

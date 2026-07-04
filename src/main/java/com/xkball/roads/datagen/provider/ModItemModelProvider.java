@@ -16,11 +16,7 @@ public class ModItemModelProvider extends ModelProvider {
 
     @Override
     protected void registerModels(@NonNull BlockModelGenerators blockModels, @NonNull ItemModelGenerators itemModels) {
-        // Generate models and associated files here
-        itemModels.generateFlatItem(ModItems.EXAMPLE_ITEM.get(), ModelTemplates.FLAT_HANDHELD_ITEM);
 
-        blockModels.createTrivialCube(ModBlocks.EXAMPLE_BLOCK.get());
-        blockModels.registerSimpleFlatItemModel(ModBlocks.EXAMPLE_BLOCK.get());
 
 
     }

@@ -17,7 +17,6 @@ public class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(Roads.MODID);
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(Registries.BLOCK_ENTITY_TYPE, Roads.MODID);
     
-    public static final DeferredBlock<Block> EXAMPLE_BLOCK = BLOCKS.registerSimpleBlock("example_block", p -> p.mapColor(MapColor.STONE));
     public static final DeferredBlock<RoadBuilderBlock> ROAD_BUILDER = BLOCKS.registerBlock(
             "road_builder",
             RoadBuilderBlock::new,

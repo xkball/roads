@@ -16,18 +16,15 @@ public class ModTabs {
 
     public static final DeferredRegister<CreativeModeTab> CREATIVE_MODE_TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, Roads.MODID);
     
-    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EXAMPLE_TAB = CREATIVE_MODE_TABS.register("example_tab", () -> CreativeModeTab.builder()
+    public static final DeferredHolder<CreativeModeTab, CreativeModeTab> TAB = CREATIVE_MODE_TABS.register("roads_tab", () -> CreativeModeTab.builder()
             .title(Component.translatable("itemGroup.roads")) //The language key for the title of your CreativeModeTab
-            .withTabsBefore(CreativeModeTabs.COMBAT)
-            .icon(() -> ModItems.EXAMPLE_ITEM.get().getDefaultInstance())
-            .displayItems((parameters, output) -> {
-                output.accept(ModItems.EXAMPLE_ITEM.get()); // Add the example item to the tab. For your own tabs, this method is preferred over the event
-            }).build());
+            .withTabsBefore(CreativeModeTabs.FOOD_AND_DRINKS, CreativeModeTabs.INGREDIENTS, CreativeModeTabs.SPAWN_EGGS)
+            .icon(() -> ModItems.ROAD_BUILDER.get().getDefaultInstance())
+            .build());
 
     @SubscribeEvent
     public static void addCreative(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey() == EXAMPLE_TAB.getKey()) {
-            event.accept(ModItems.EXAMPLE_BLOCK_ITEM);
+        if (event.getTabKey() == TAB.getKey()) {
             event.accept(ModItems.ROAD_BUILDER);
         }
     }
